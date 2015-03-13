@@ -1,15 +1,4 @@
 var gulp = require('gulp');
+var config = require('../config');
 
-gulp.task('default', [
-  'concat:vendor',
-  'concat:lib',
-  'less:dev',
-  'copy:images',
-  'copy:images:vendor',
-  'copy:fonts',
-  'copy:polyfills',
-  'copy:js:guide',
-  'build',
-  'server:sync',
-  'watch'
-]);
+gulp.task('default', config.task.default);

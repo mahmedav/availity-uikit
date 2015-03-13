@@ -3,6 +3,14 @@ var config = require('../config');
 var gulpif = require('gulp-if');
 var using = require('gulp-using');
 
+gulp.task('copy', [
+  'copy:images',
+  'copy:images:vendor',
+  'copy:fonts',
+  'copy:polyfills',
+  'copy:js:guide'
+]);
+
 gulp.task('copy:fonts', function() {
   gulp.src(config.fonts.src)
     .pipe(gulpif(config.args.verbose, using({prefix:'Task [copy:fonts] using'})))

@@ -16,6 +16,11 @@
 */
 
 var requireDir = require('require-dir');
+var gulp = require('gulp');
+var config = require('./gulp/config');
+var avGulp = require('../availity-gulp');
 
 // Require all tasks in gulp/tasks, including subfolders
 requireDir('./gulp/tasks', { recurse: true });
+
+avGulp(gulp, config);

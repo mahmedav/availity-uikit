@@ -115,3 +115,14 @@ gulp.task('build:docs', function() {
 
 });
 
+gulp.task('build:ghpages', [
+  'concat:vendor',
+  'concat:lib',
+  'less:dev',
+  'copy:images',
+  'copy:images:vendor',
+  'copy:fonts',
+  'copy:polyfills',
+  'copy:js:guide',
+  'build'
+]);

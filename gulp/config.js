@@ -57,7 +57,6 @@ module.exports = {
     path: path.resolve(__dirname, '..')
   },
   regex: {
-    // ?? is there a better way of doing this
     select: [/url\('select2/g, "url('../images/vendor/select2"]
   },
   less: {

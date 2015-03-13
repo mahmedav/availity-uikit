@@ -2,6 +2,54 @@ var path = require('path');
 var argv = require('minimist')(process.argv.slice(2));
 
 module.exports = {
+  task: {
+    default: [
+      'copy',
+      'av:concat',
+      'less:dev',
+      'av:build',
+      'server:sync',
+      'av:watch'
+    ],
+    build: [
+      'av:build:handlebars:partials',
+      'av:build:docs'
+    ],
+    concat: [
+      'av:concat:vendor',
+      'concat:lib'
+    ],
+    lint: [
+      'lint:js',
+      'lint:lib'
+    ],
+    watch: [
+      'watch:less',
+      'watch:js',
+      'watch:js:guide',
+      'av:watch:partials',
+      'av:watch:docs',
+      'watch:images'
+    ]
+  },
+  collections: function(sortComponents){
+        var collection = {};
+        collection.pages = {
+          sortBy: 'menu',
+          reverse: false
+        },
+        collection.components = {
+          pattern: '*-component.html',
+          sortBy: function(a, b) {
+            return sortComponents.sort.call(sortComponents, a, b);
+          }
+        },
+        collection.javascript = {
+          pattern: '*-javascript.html'
+        },
+        collection.examples = {}; // empty pattern because the pages are tagged with collection attribute in YAML front matter
+        return collection;
+      },
   args: {
     verbose: !!argv.verbose
   },
@@ -9,6 +57,7 @@ module.exports = {
     path: path.resolve(__dirname, '..')
   },
   regex: {
+    // ?? is there a better way of doing this
     select: [/url\('select2/g, "url('../images/vendor/select2"]
   },
   less: {
@@ -56,7 +105,8 @@ module.exports = {
     templates: {
       src: './docs/guide/templates',
       targets: 'docs/guide/templates/**/*.hbs',
-      extension: '.hbs'
+      extension: '.hbs',
+      engine: 'handlebars'
     },
     dest: 'build/guide',
     sort: {
@@ -126,7 +176,7 @@ module.exports = {
     src: [
       'bower_components/bootstrap/dist/js/bootstrap.js',
       'bower_components/moment/moment.js',
-      'bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js',
+      'bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
       'bower_components/typeahead.js/dist/typeahead.bundle.js',
       'bower_components/select2/select2.js',
       'bower_components/velocity/velocity.js',
@@ -146,5 +196,9 @@ module.exports = {
       'bower_components/ExplorerCanvas/excanvas.js'
     ],
     dest: 'build/guide/js'
-  }
+  },
+  filters: [
+    '*',
+    '!**/*-ui-demo.html'
+  ]
 };

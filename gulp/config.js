@@ -3,33 +3,16 @@ var argv = require('minimist')(process.argv.slice(2));
 
 module.exports = {
   task: {
-    default: [
-      'copy',
-      'av:concat',
+    ghpages: [
+      'concat:vendor',
+      'concat:lib',
       'less:dev',
-      'av:build',
-      'server:sync',
-      'av:watch'
-    ],
-    build: [
-      'av:build:handlebars:partials',
-      'av:build:docs'
-    ],
-    concat: [
-      'av:concat:vendor',
-      'concat:lib'
-    ],
-    lint: [
-      'lint:js',
-      'lint:lib'
-    ],
-    watch: [
-      'watch:less',
-      'watch:js',
-      'watch:js:guide',
-      'av:watch:partials',
-      'av:watch:docs',
-      'watch:images'
+      'copy:images',
+      'copy:images:vendor',
+      'copy:fonts',
+      'copy:polyfills',
+      'copy:js:guide',
+      'build'
     ]
   },
   collections: function(sortComponents){
@@ -37,16 +20,16 @@ module.exports = {
         collection.pages = {
           sortBy: 'menu',
           reverse: false
-        },
+        };
         collection.components = {
           pattern: '*-component.html',
           sortBy: function(a, b) {
             return sortComponents.sort.call(sortComponents, a, b);
           }
-        },
+        };
         collection.javascript = {
           pattern: '*-javascript.html'
-        },
+        };
         collection.examples = {}; // empty pattern because the pages are tagged with collection attribute in YAML front matter
         return collection;
       },

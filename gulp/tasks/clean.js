@@ -1,16 +1,8 @@
 var gulp = require('gulp');
 
-gulp.task('clean', ['clean:docs']);
+gulp.task('clean', ['av:clean:docs']);
+
 gulp.task('clean:dist', ['clean:css', 'clean:js', 'clean:fonts', 'clean:images']);
-
-gulp.task('clean:docs', function(cb) {
-  var config = require('../config');
-  var del = require('del');
-
-  del([config.docs.dest], function() {
-    cb();
-  });
-});
 
 gulp.task('clean:css', function(cb) {
   var config = require('../config');
